@@ -4,25 +4,30 @@ const playerAmt = 250;
 let sim;
 let graphW;
 let graphH;
+let graphpos;
 
 function setup() {
   createCanvas(windowWidth, windowHeight).position(0, 0);
   for (let i = 0; i < playerAmt; i++) {
-    players.push(new player(new NeuralNetwork(8, 32, 2)));
+    console.log("new player");
+    players.push(new player(new NeuralNetwork(8, 16, 2)));
   }
   graphW = width / 2;
   graphH = height / 2;
+  graphPos = createVector(width - height, 0);
 }
 
 function draw() {
-  graphW = width / 2;
-  graphH = height / 2;
+  graphW = height;
+  graphH = height;
+  graphPos = createVector(width - height, 0);
   sim = createGraphics(graphW, graphH);
   sim.background(51);
-  for (let player of players) {
-    player.show();
+  for (let playery of players) {
+    playery.show();
+    console.log("rendering");
   }
-  image(sim, width / 2, 0);
+  image(sim, graphPos.x, graphPos.y);
 }
 
 function newGen() {
@@ -36,6 +41,7 @@ const player = function (nn) {
   this.height = 1 / 16;
   this.show = () => {
     sim.noStroke();
+    sim.fill(235, 255 / 5);
     sim.ellipse(sim.width / 3, sim.height * this.y, sim.width * this.width, sim.height * this.height)
   }
   this.run = (y, vel, tyu, w, tyb, dist, ryb, ryt) => {
