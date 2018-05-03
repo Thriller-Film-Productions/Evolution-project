@@ -2,6 +2,7 @@ const players = [];
 const playerStorage = [];
 const playerAmt = 50;
 const walls = [];
+let generations = 0;
 let sim;
 let graphW;
 let graphH;
@@ -31,6 +32,7 @@ function draw() {
   sim.background(51);
   sim.fill(235);
   sim.text("FPS: "+round(frameRate()), 10, 15);
+  sim.text("Generations: "+generations, 20+textWidth("FPS: "+round(frameRate())), 15);
   for (let i = walls.length - 1; i >= 0; i--) {
     if (walls[i].show() == "spliceMe") {
       walls.splice(i, 1);
@@ -50,6 +52,7 @@ function draw() {
 
 function newGen() {
   if (players.length <= 0) {
+    generations++;
     walls.splice(0, walls.length);
     walls.push(new wall());
     for (let i = 0; i < playerAmt; i++) {
@@ -80,9 +83,10 @@ const player = function (nn) {
     return this.nn.predict([y, vel, tyu, w, tyb, dist]);
   }
   this.up = () => {
-    let out = this.run(this.y, this.vel, walls[0].topY, walls[0].height, walls[0].bottomY, walls[0].x-this.x)
+    let out = this.run(this.y, this.vel*100, walls[0].topY, walls[0].height, walls[0].bottomY, walls[0].x-1/3);
+    // console.log(walls[0].x-1/3);
     if (out[0] > out[1]) {
-      vel+=0.001;
+      this.vel+=0.001;
     }
   }
 }
