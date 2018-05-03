@@ -55,20 +55,35 @@ function newGen() {
     generations++;
     walls.splice(0, walls.length);
     walls.push(new wall());
-    for (let i = 0; i < playerAmt; i++) {
-      console.log("new player");
-      players.push(new player(new NeuralNetwork(6, 16, 2)));
+    players.sort((a, b) => {
+      return b.score-a.score;
+    })
+    for (let i = 0; i < playerAmt/2; i++) {
+      players.push(playerStorage[i].nn.mutate(mutate));
+      players.push(playerStorage[i].nn.mutate(mutate));
     }
     playerStorage.splice(0, playerStorage.length);
   }
 }
 
+function mutate(x) {
+  if (random(1) < 0.1) {
+    let offset = randomGaussian() * 0.5;
+    let newx = x + offset;
+    return newx;
+  } else {
+    return x;
+  }
+}
+
 const player = function (nn) {
+  this.score = 0;
   this.nn = nn;
   this.y = random(0.1, 0.9);
   this.vel = 0;
   this.r = 1 / 16;
   this.show = () => {
+    this.score++;
     sim.noStroke();
     sim.fill(235, 255 / 5);
     sim.ellipse(sim.width / 3, sim.height * this.y, sim.width * this.r, sim.height * this.r);
