@@ -113,7 +113,7 @@ const player = function (nn) {
 }
 
 const wall = function () {
-  this.topY = random(0, 8 / 16);
+  this.topY = random(0, 2/3);
   this.bottomY = this.topY-1/3;
   this.height = this.topY-this.bottomY;
   this.width = 1 / 16;
