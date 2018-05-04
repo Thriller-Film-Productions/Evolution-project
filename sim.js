@@ -1,6 +1,6 @@
 const players = [];
 const playerStorage = [];
-const playerAmt = 500;
+const playerAmt = 1000;
 const walls = [];
 let avgs = [];
 let generations = 0;
@@ -113,7 +113,7 @@ const player = function (nn) {
 }
 
 const wall = function () {
-  this.topY = random(0, 2/3);
+  this.topY = random(1/16,15/16);
   this.bottomY = this.topY-1/3;
   this.height = this.topY-this.bottomY;
   this.width = 1 / 16;
