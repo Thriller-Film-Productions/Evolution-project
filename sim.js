@@ -2,11 +2,13 @@ const players = [];
 const playerStorage = [];
 const playerAmt = 50;
 const walls = [];
+let avgs = [];
 let generations = 0;
 let sim;
 let graphW;
 let graphH;
 let graphpos;
+
 
 function setup() {
   if (playerAmt % 2) {
@@ -33,6 +35,7 @@ function draw() {
   sim.fill(235);
   sim.text("FPS: " + round(frameRate()), 10, 15);
   sim.text("Generations: " + generations, 20 + textWidth("FPS: " + round(frameRate())), 15);
+  sim.text("Avg score: " + getAvgScore(), 30 + textWidth("FPS: " + round(frameRate())+"Generations: " + generations), 15);
   for (let i = walls.length - 1; i >= 0; i--) {
     if (walls[i].show() == "spliceMe") {
       walls.splice(i, 1);
@@ -40,18 +43,21 @@ function draw() {
     }
   }
   for (let i = players.length - 1; i >= 0; i--) {
-    players[i].up();
-    if (players[i].show() == "spliceMe") {
-      playerStorage.push(players.splice(i, 1)[0]);
+    if (players[i]) {
+      players[i].up();
+      if (players[i].show() == "spliceMe") {
+        playerStorage.push(players.splice(i, 1)[0]);
+      }
     }
   }
   image(sim, graphPos.x, graphPos.y);
   newGen();
-  console.log("frame");
 }
 
 function newGen() {
   if (players.length <= 0) {
+    avgs.push(getAvgScore());
+    console.log(JSON.stringify(avgs))
     generations++;
     walls.splice(0, walls.length);
     walls.push(new wall());
@@ -59,9 +65,8 @@ function newGen() {
       return b.score - a.score;
     })
     for (let i = 0; i < playerAmt / 2; i++) {
-      console.log(playerStorage[i].nn);
-      players.push(playerStorage[i].nn.mutate(mutate));
-      players.push(playerStorage[i].nn.mutate(mutate));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
     }
     playerStorage.splice(0, playerStorage.length);
   }
@@ -79,8 +84,9 @@ function mutate(x) {
 
 const player = function (nn) {
   this.score = 0;
-  this.nn = nn;
-  this.y = random(0.1, 0.9);
+  this.nn = nn.copy();
+  this.nn.mutate(mutate);
+  this.y = 0.5
   this.vel = 0;
   this.r = 1 / 16;
   this.show = () => {
@@ -90,7 +96,6 @@ const player = function (nn) {
     sim.ellipse(sim.width / 3, sim.height * this.y, sim.width * this.r, sim.height * this.r);
     this.vel -= 0.0002;
     this.y -= this.vel;
-    console.log(sim.height, this.y - 1 / sim.height);
     if (this.y + this.r / 2 > 1 || this.y + this.r < 0 || collideRectCircle(walls[0].x, walls[0].topY, walls[0].width, walls[0].height, 1 / 3, this.y, this.r)) {
       return "spliceMe";
     }
@@ -108,8 +113,8 @@ const player = function (nn) {
 }
 
 const wall = function () {
-  this.topY = random(2 / 16, 8 / 16);
-  this.bottomY = random(this.topY, 14 / 16);
+  this.topY = random(0, 8 / 16);
+  this.bottomY = random(this.topY, 14/16-this.topY);
   this.height = this.bottomY - this.topY;
   this.width = 1 / 16;
   this.x = 1;
@@ -124,6 +129,12 @@ const wall = function () {
   }
 }
 
+function getAvgScore() {
+  let arr = players.concat(playerStorage);
+  let scores = arr.map(i => i.score);
+  let avg = scores.reduce((acc, val) => acc+val)/arr.length;
+  return avg;
+}
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
