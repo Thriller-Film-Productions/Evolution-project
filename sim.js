@@ -11,8 +11,8 @@ let graphpos;
 
 
 function setup() {
-  if (playerAmt % 4) {
-    throw new Error("playerAmt must be an even number.");
+  if (playerAmt % 8) {
+    throw new Error("playerAmt must be a multiple of 8.");
   }
   createCanvas(windowWidth, windowHeight).position(0, 0);
   for (let i = 0; i < playerAmt; i++) {
@@ -64,7 +64,11 @@ function newGen() {
     players.sort((a, b) => {
       return b.score - a.score;
     })
-    for (let i = 0; i < playerAmt / 4; i++) {
+    for (let i = 0; i < playerAmt / 8; i++) {
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
@@ -115,8 +119,8 @@ const player = function (nn) {
 }
 
 const wall = function () {
-  this.topY = random(1/16,15/16);
-  this.bottomY = this.topY-1/3;
+  this.topY = random(1/16,10/16);
+  this.bottomY = this.topY-5.3/16;
   this.height = this.topY-this.bottomY;
   this.width = 1 / 16;
   this.x = 1;
