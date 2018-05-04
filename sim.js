@@ -57,7 +57,7 @@ function draw() {
 function newGen() {
   if (players.length <= 0) {
     avgs.push(getAvgScore());
-    console.log(JSON.stringify(avgs))
+    //console.log(JSON.stringify(avgs))
     generations++;
     walls.splice(0, walls.length);
     walls.push(new wall());
@@ -73,7 +73,7 @@ function newGen() {
 }
 
 function mutate(x) {
-  if (random(1) < 0.1) {
+  if (random(1) < 0.75) {
     let offset = randomGaussian() * 0.5;
     let newx = x + offset;
     return newx;
