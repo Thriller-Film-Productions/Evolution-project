@@ -11,7 +11,7 @@ let graphpos;
 
 
 function setup() {
-  if (playerAmt % 2) {
+  if (playerAmt % 4) {
     throw new Error("playerAmt must be an even number.");
   }
   createCanvas(windowWidth, windowHeight).position(0, 0);
@@ -64,7 +64,9 @@ function newGen() {
     players.sort((a, b) => {
       return b.score - a.score;
     })
-    for (let i = 0; i < playerAmt / 2; i++) {
+    for (let i = 0; i < playerAmt / 4; i++) {
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
     }
@@ -73,7 +75,7 @@ function newGen() {
 }
 
 function mutate(x) {
-  if (random(1) < 0.75) {
+  if (random(1) < 0.5) {
     let offset = randomGaussian() * 0.5;
     let newx = x + offset;
     return newx;
@@ -96,7 +98,7 @@ const player = function (nn) {
     sim.ellipse(sim.width / 3, sim.height * this.y, sim.width * this.r, sim.height * this.r);
     this.vel -= 0.0002;
     this.y -= this.vel;
-    if (this.y + this.r / 2 > 1 || this.y + this.r < 0 || collideRectCircle(walls[0].x, walls[0].topY, walls[0].width, walls[0].height, 1 / 3, this.y, this.r)) {
+    if (this.y - this.r / 2 > 1 || this.y + this.r < 0 || collideRectCircle(walls[0].x, walls[0].topY, walls[0].width, walls[0].height, 1 / 3, this.y, this.r)) {
       return "spliceMe";
     }
   }
