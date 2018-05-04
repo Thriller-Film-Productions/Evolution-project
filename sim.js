@@ -115,7 +115,7 @@ const player = function (nn) {
 const wall = function () {
   this.topY = random(0, 8 / 16);
   this.bottomY = random(this.topY, 14/16-this.topY);
-  this.height = this.bottomY - this.topY;
+  this.height = 7 / 32;
   this.width = 1 / 16;
   this.x = 1;
   this.show = () => {
