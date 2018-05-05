@@ -119,11 +119,11 @@ const player = function (nn) {
 }
 
 const wall = function () {
-  this.topY = random(1/16,10/16);
+  this.topY = random(1/32,21/32);
   this.bottomY = this.topY-5.3/16;
   this.height = this.topY-this.bottomY;
   this.width = 1 / 16;
-  this.x = 1;
+  this.x = 1.7;
   this.show = () => {
     this.x -= 0.01;
     sim.noStroke();
