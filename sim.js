@@ -8,7 +8,7 @@ let sim;
 let graphW;
 let graphH;
 let graphpos;
-
+//sigh
 
 function setup() {
   if (playerAmt % 8) {
