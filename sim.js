@@ -25,17 +25,18 @@ function setup() {
   sim = createGraphics(graphW, graphH);
   walls.push(new wall());
 }
-for (i = 0; i < 3; i++) {
+
 function draw() {
+  for (i = 0; i < 5; i++) {
   graphW = height;
   graphH = height;
   graphPos = createVector(width - height, 0);
   sim = createGraphics(graphW, graphH);
   sim.background(51);
   sim.fill(235);
-  sim.text("FPS: " + round(frameRate("120")), 10, 15);
-  sim.text("Generations: " + generations, 20 + textWidth("FPS: " + round(frameRate("120"))), 15);
-  sim.text("Avg score: " + getAvgScore(), 30 + textWidth("FPS: " + round(frameRate("120"))+"Generations: " + generations), 15);
+  sim.text("FPS: " + round(frameRate()), 10, 15);
+  sim.text("Generations: " + generations, 20 + textWidth("FPS: " + round(frameRate())), 15);
+  sim.text("Avg score: " + getAvgScore(), 30 + textWidth("FPS: " + round(frameRate())+"Generations: " + generations), 15);
   for (let i = walls.length - 1; i >= 0; i--) {
     if (walls[i].show() == "spliceMe") {
       walls.splice(i, 1);
