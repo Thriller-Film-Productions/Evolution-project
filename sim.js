@@ -11,8 +11,8 @@ let graphpos;
 //sigh
 
 function setup() {
-  if (playerAmt % 8) {
-    throw new Error("playerAmt must be a multiple of 8.");
+  if (playerAmt % 50) {
+    throw new Error("playerAmt must be a multiple of 50.");
   }
   createCanvas(windowWidth, windowHeight).position(0, 0);
   for (let i = 0; i < playerAmt; i++) {
@@ -25,7 +25,7 @@ function setup() {
   sim = createGraphics(graphW, graphH);
   walls.push(new wall());
 }
-
+for (i = 0; i < 3; i++) {
 function draw() {
   graphW = height;
   graphH = height;
@@ -53,6 +53,7 @@ function draw() {
   image(sim, graphPos.x, graphPos.y);
   newGen();
 }
+}
 
 function newGen() {
   if (players.length <= 0) {
@@ -64,7 +65,49 @@ function newGen() {
     players.sort((a, b) => {
       return b.score - a.score;
     })
-    for (let i = 0; i < playerAmt / 8; i++) {
+    for (let i = 0; i < playerAmt / 50; i++) {
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
+      players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
@@ -79,7 +122,7 @@ function newGen() {
 }
 
 function mutate(x) {
-  if (random(1) < 0.5) {
+  if (random(1) < 0.75) {
     let offset = randomGaussian() * 0.5;
     let newx = x + offset;
     return newx;
