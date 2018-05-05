@@ -27,7 +27,7 @@ function setup() {
 }
 
 function draw() {
-  for (i = 0; i < 9; i++) {
+  for (i = 0; i < 5; i++) {
   graphW = height;
   graphH = height;
   graphPos = createVector(width - height, 0);
