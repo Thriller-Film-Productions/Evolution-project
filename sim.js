@@ -2,13 +2,12 @@ const players = [];
 const playerStorage = [];
 const playerAmt = 1000;
 const walls = [];
-let avgs = [];
+// let avgs = [];
 let generations = 0;
 let sim;
 let graphW;
 let graphH;
 let graphpos;
-//sigh
 
 function setup() {
   if (playerAmt % 2) {
@@ -66,7 +65,7 @@ function newGen() {
     playerStorage.sort((a, b) => {
       return b.score - a.score;
     });
-    avgs.push(getAvgScore());
+    // avgs.push(getAvgScore());
     for (let i = 0; i < playerAmt / 2; i++) {
       players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
