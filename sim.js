@@ -29,9 +29,9 @@ function setup() {
 function draw() {
   console.log(playerStorage.length, players.length, walls.length);
   // for (i = 0; i < 5; i++) {
-  graphW = width;
+  graphW = height;
   graphH = height;
-  graphPos = createVector(0, 0);
+  graphPos = createVector(width - height, 0);
   sim = createGraphics(graphW, graphH);
   sim.background(51);
   sim.fill(235);
@@ -66,7 +66,7 @@ function newGen() {
     playerStorage.sort((a, b) => {
       return b.score - a.score;
     });
-    avgs.push(playerStorage[0]);
+    avgs.push(playerStorage[0].score);
     for (let i = 0; i < playerAmt / 2; i++) {
       players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
