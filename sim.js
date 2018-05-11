@@ -100,7 +100,7 @@ const player = function (nn) {
     sim.ellipse(sim.width / 3, sim.height * this.y, sim.width * this.r, sim.height * this.r);
     this.vel -= 0.0002;
     this.y -= this.vel;
-    if (this.y - this.r / 2 > 1 || this.y + this.r < 0 || collideRectCircle(walls[0].x, walls[0].topY, walls[0].width, walls[0].height, 1 / 3, this.y, this.r)) {
+    if (this.y + this.r / 2 > 1 || this.y - this.r < 0 || collideRectCircle(walls[0].x, walls[0].topY, walls[0].width, walls[0].height, 1 / 3, this.y, this.r)) {
       return "spliceMe";
     }
   }
