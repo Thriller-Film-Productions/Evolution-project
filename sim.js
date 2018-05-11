@@ -66,7 +66,7 @@ function newGen() {
     playerStorage.sort((a, b) => {
       return b.score - a.score;
     });
-    avgs.push(playerStorage[0].score);
+    avgs.push(getAvgScore());
     for (let i = 0; i < playerAmt / 2; i++) {
       players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
