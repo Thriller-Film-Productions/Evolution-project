@@ -11,8 +11,8 @@ let graphpos;
 //sigh
 
 function setup() {
-  if (playerAmt % 50) {
-    throw new Error("playerAmt must be a multiple of 50.");
+  if (playerAmt % 2) {
+    throw new Error("playerAmt must be a multiple of 2.");
   }
   createCanvas(windowWidth, windowHeight).position(0, 0);
   for (let i = 0; i < playerAmt; i++) {
@@ -27,16 +27,17 @@ function setup() {
 }
 
 function draw() {
-  for (i = 0; i < 5; i++) {
-  graphW = height;
+  console.log(playerStorage.length, players.length, walls.length);
+  // for (i = 0; i < 5; i++) {
+  graphW = width;
   graphH = height;
-  graphPos = createVector(width - height, 0);
+  graphPos = createVector(0, 0);
   sim = createGraphics(graphW, graphH);
   sim.background(51);
   sim.fill(235);
   sim.text("FPS: " + round(frameRate()), 10, 15);
   sim.text("Generations: " + generations, 20 + textWidth("FPS: " + round(frameRate())), 15);
-  sim.text("Avg score: " + getAvgScore(), 30 + textWidth("FPS: " + round(frameRate())+"Generations: " + generations), 15);
+  sim.text("Avg score: " + getAvgScore(), 30 + textWidth("FPS: " + round(frameRate()) + "Generations: " + generations), 15);
   for (let i = walls.length - 1; i >= 0; i--) {
     if (walls[i].show() == "spliceMe") {
       walls.splice(i, 1);
@@ -53,70 +54,23 @@ function draw() {
   }
   image(sim, graphPos.x, graphPos.y);
   newGen();
-}
+  // }
 }
 
 function newGen() {
   if (players.length <= 0) {
-    avgs.push(getAvgScore());
     //console.log(JSON.stringify(avgs))
     generations++;
     walls.splice(0, walls.length);
     walls.push(new wall());
-    players.sort((a, b) => {
+    playerStorage.sort((a, b) => {
       return b.score - a.score;
-    })
-    for (let i = 0; i < playerAmt / 50; i++) {
+    });
+    avgs.push(playerStorage[0]);
+    for (let i = 0; i < playerAmt / 2; i++) {
       players.push(new player(playerStorage[i].nn));
       players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
-      players.push(new player(playerStorage[i].nn));
+
     }
     playerStorage.splice(0, playerStorage.length);
   }
@@ -163,9 +117,9 @@ const player = function (nn) {
 }
 
 const wall = function () {
-  this.topY = random(1/32,21/32);
-  this.bottomY = this.topY-5.3/16;
-  this.height = this.topY-this.bottomY;
+  this.topY = random(1 / 32, 21 / 32);
+  this.bottomY = this.topY - 5.3 / 16;
+  this.height = this.topY - this.bottomY;
   this.width = 1 / 16;
   this.x = 1.7;
   this.show = () => {
@@ -182,7 +136,7 @@ const wall = function () {
 function getAvgScore() {
   let arr = players.concat(playerStorage);
   let scores = arr.map(i => i.score);
-  let avg = scores.reduce((acc, val) => acc+val)/arr.length;
+  let avg = scores.reduce((acc, val) => acc + val) / arr.length;
   return avg;
 }
 
