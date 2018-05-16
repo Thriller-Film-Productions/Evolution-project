@@ -8,12 +8,16 @@ let sim;
 let graphW;
 let graphH;
 let graphpos;
+let video;
+let loaded = false;
+let cnv;
 
 function setup() {
+  cnv = createCanvas(windowWidth, windowHeight).position(0, 0);
+  if (getURLParams().sim) {
   if (playerAmt % 2) {
     throw new Error("playerAmt must be a multiple of 2.");
   }
-  createCanvas(windowWidth, windowHeight).position(0, 0);
   for (let i = 0; i < playerAmt; i++) {
     console.log("new player");
     players.push(new player(new NeuralNetwork(6, 16, 2)));
@@ -23,9 +27,19 @@ function setup() {
   graphPos = createVector(width - height, 0);
   sim = createGraphics(graphW, graphH);
   walls.push(new wall());
+} else {
+  video = createElement("video");
+  video.position(0, 0).elt.src="test.mov";
+  video.elt.src="test.mov";
+  console.log(video);
+  video.elt.controls = true;
+  video.elt.width = width;
+  video.elt.height = height;
+}
 }
 
 function draw() {
+  if (getURLParams().sim) {
   console.log(playerStorage.length, players.length, walls.length);
   // for (i = 0; i < 5; i++) {
   graphW = height;
@@ -54,6 +68,7 @@ function draw() {
   image(sim, graphPos.x, graphPos.y);
   newGen();
   // }
+}
 }
 
 function newGen() {
@@ -141,4 +156,8 @@ function getAvgScore() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+}
+
+function videoLoaded() {
+  loaded = true;
 }
